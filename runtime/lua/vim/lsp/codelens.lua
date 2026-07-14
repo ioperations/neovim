@@ -208,7 +208,8 @@ function Provider:on_win(toprow, botrow)
           local range = vim.range.lsp(bufnr, row_lenses.lenses[1].range, client.offset_encoding)
           ---@type [string, string][]
           local virt_text = {
-            { string.rep(' ', range.start_col), 'LspCodeLensSeparator' },
+            { string.rep(' ', 1), 'LspCodeLensSeparator' },
+           -- range.start_col), 'LspCodeLensSeparator' },
           }
           local has_unresolved = false
 
@@ -244,9 +245,8 @@ function Provider:on_win(toprow, botrow)
 
             api.nvim_buf_clear_namespace(bufnr, namespace, row, row + 1)
             api.nvim_buf_set_extmark(bufnr, namespace, row, 0, {
-              virt_lines = { virt_text },
-              virt_lines_above = true,
-              virt_lines_overflow = 'scroll',
+              virt_text = virt_text,
+              virt_text_pos = "eol",
               hl_mode = 'combine',
             })
 
